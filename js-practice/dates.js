@@ -11,5 +11,7 @@ function convertMillisToDays(millis) {
     return millis/(1000 * 60 * 60 * 24);
 }
 
+module.exports = { calculateAge };
+
 const val = calculateAge(new Date("1970-01-01"))
 console.log(val);

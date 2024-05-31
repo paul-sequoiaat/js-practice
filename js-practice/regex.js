@@ -3,12 +3,14 @@ const emailRegex = /^(?=.*@)(?=.*\..{1,}).{5,}$/;
 const validateEmail = (value) => {
     try {
         let val = emailRegex.exec(value)
-        val !== null ? console.log('Valid') : console.log('Invalid');
+        console.log(val);
+        return val !== null ? 'Valid' : 'Invalid';
     } catch (error) {
         console.log(`ERROR ${error}`);
     }
-    
 }
+
+module.exports = { validateEmail }
 
 validateEmail('a@b.com')
 validateEmail('bob.com')

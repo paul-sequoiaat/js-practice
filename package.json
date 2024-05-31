@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm test"
+    "test": "jest"
   },
   "author": "Paul Joy",
   "license": "ISC",
   "dependencies": {
     "axios": "^1.7.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
