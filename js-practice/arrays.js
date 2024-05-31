@@ -105,3 +105,6 @@ const modifyItems = (items, start, deleteCount, ...newItems) => {
 };
 
 console.log(modifyItems(items, 0, 2, 'newItem1', 'newItem2')); 
+
+
+module.exports = { findAdmin, findOutOfStockIndex, filterPassedStudents };
