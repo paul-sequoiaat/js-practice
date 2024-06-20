@@ -2,11 +2,11 @@ const pg = require('pg');
 const { Client } = pg;
 require('dotenv').config();
 
-const client = new Client();
 
 const queryDb = async(text, values) => {
+    const client = new Client();
+    const query = createQueryConfig(text, values);
     try {
-        const query = createQueryConfig(text, values);
         await client.connect();
         const res = await client.query(query);
         return res.rows;
