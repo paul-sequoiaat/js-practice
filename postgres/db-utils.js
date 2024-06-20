@@ -1,13 +1,13 @@
 const pg = require('pg');
-const { Client } = pg;
+const { Pool } = pg;
 require('dotenv').config();
 
+const pool = new Pool();
 
 const queryDb = async(text, values) => {
-    const client = new Client();
+    const client = await pool.connect();
     const query = createQueryConfig(text, values);
     try {
-        await client.connect();
         const res = await client.query(query);
         return res.rows;
     } catch (err) {

@@ -52,3 +52,8 @@ const getActorDetailsForAnyFilm = async() => {
         console.log(`ERROR ${err}`);
     }
 }
+
+
+getAllActors();
+
+getActorDetailsForAnyFilm();
