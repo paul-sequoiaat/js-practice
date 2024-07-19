@@ -2,7 +2,7 @@ const csv = require('csv-parser');
 const fs = require('fs');
 var path = require('path');
 const results = [];
-const csvPath = path.join("js-practice", "csv", "MOCK_DATA.csv");
+const csvPath = path.join("resources", "MOCK_DATA.csv");
 const ipAddress = "94.68.191.243";
 var email;
 
