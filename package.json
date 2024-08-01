@@ -9,7 +9,9 @@
   "author": "Paul Joy",
   "license": "ISC",
   "dependencies": {
+    "@azure/storage-blob": "^12.23.0",
     "axios": "^1.7.2",
+    "azurite": "^3.31.0",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.4.5",
     "pg": "^8.12.0"
