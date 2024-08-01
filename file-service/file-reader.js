@@ -1,7 +1,11 @@
-const fs = require('fs').promises;
+const fs = require('fs');
 
 const readContentFromFile = async(path) => {
-    return fs.readFile(path, 'utf-8');
+    return fs.readFileSync(path, 'utf-8');
 }
 
-module.exports = { readContentFromFile };
+const getReadStreamForFile = async(path) => {
+    return fs.createReadStream(path, 'utf-8');
+}
+
+module.exports = { readContentFromFile, getReadStreamForFile };
