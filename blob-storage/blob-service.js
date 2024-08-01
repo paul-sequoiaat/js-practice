@@ -1,13 +1,12 @@
 require('dotenv').config();
-const { BlobServiceClient, ContainerClient } = require('@azure/storage-blob');
+const { BlobServiceClient } = require('@azure/storage-blob');
+const { readContentFromFile } = require('../file-service/file-reader');
+const path = require('path');
 
 const connectionString = process.env.BLOB_STORAGE_CONNECTION_STRING;
 const blobContainerName = process.env.BLOB_CONTAINER;
-
 const blob = "data";
-const blob1 = "data1";
-const blob2 = "data2";
-const blob3 = "data3";
+const filePath = path.join('resources', 'ACTOR_DVD_RENTAL.csv');
 
 const getBlockBlobClient = async(blob) => {
     const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
@@ -22,14 +21,11 @@ const getBlockBlobClient = async(blob) => {
     return containerClient.getBlockBlobClient(blob);
 }
 
-const uploadToBlobStorage = async(blob, data) => {
+const uploadToBlobStorage = async(blob, path) => {
+    const data = await readContentFromFile(path);
     const blockBlobClient = await getBlockBlobClient(blob);
-    var blobExists = await blockBlobClient.exists();
-    if (blobExists) {
-        console.log('Blob exists');
-        return null;
-    }
     console.log('uploading to blob storage');
+    console.log('data length', data.length);
     return await blockBlobClient.upload(data, data.length);
 }
 
@@ -44,12 +40,12 @@ const downloadFromBlobStorage = async(blob) => {
     return blobContentBuffer.toString('utf-8');
 }
 
-// uploadToBlobStorage(blob3, "Bangalore").then(res => {
+// uploadToBlobStorage(blob, filePath).then(res => {
 //     if (res) {
 //         console.log(`Blob upload success`)
 //     }})
 //     .catch(err => console.log(`ERROR ${err}`));
 
-// downloadFromBlobStorage(blob1)
+// downloadFromBlobStorage(blob)
 //     .then(res => console.log(`Blob Content :- ${res}`))
 //     .catch(err => console.log(`Error :- ${err}`));
