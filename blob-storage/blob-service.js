@@ -6,7 +6,7 @@ const path = require('path');
 const connectionString = process.env.BLOB_STORAGE_CONNECTION_STRING;
 const blobContainerName = process.env.BLOB_CONTAINER;
 const blob = process.env.BLOB;
-const filePath = path.join('resources', 'ACTOR_DVD_RENTAL.csv');
+const filePath = path.join('resources', 'MOCK_DATA_WITH_NAME_AND_DATETIME.csv');
 
 const getBlockBlobClient = async(blob) => {
     const containerClient = await getContainerClient();
@@ -30,7 +30,6 @@ const getContainerClient = async() => {
 
 const uploadToBlobStorage = async(blob, path) => {
     const data = await getReadStreamForFile(path);
-    console.log('data read from file', data.length);
     const blockBlobClient = await getBlockBlobClient(blob);
     console.log('uploading to blob', blob);
     return await blockBlobClient.uploadStream(data);
@@ -43,7 +42,7 @@ const downloadFromBlobStorage = async(blob) => {
         throw new Error("Cannot download content - Reason: Blob does not exist")
     }
 
-    const blobContentBuffer = await blockBlobClient.downloadToBuffer(0);
+    const blobContentBuffer = await blockBlobClient.downloadToBuffer();
     return blobContentBuffer.toString('utf-8');
 }
 
@@ -56,13 +55,13 @@ const deleteAllBlobsInContainer = async() => {
     }
 }
 
-// uploadToBlobStorage(blob, filePath)
-//     .then(res => {
-//         if (res) console.log(`Blob upload success`)
-//     })
-//     .catch(err => console.log(`ERROR ${err}`));
+uploadToBlobStorage(blob, filePath)
+    .then(res => {
+        if (res) console.log(`Blob upload success`, new Date())
+    })
+    .catch(err => console.log(`ERROR ${err}`));
 
-downloadFromBlobStorage(blob)
-    .then(res => console.log(`Blob Content :- ${res}`))
-    .catch(err => console.log(`Error :- ${err}`));
+// downloadFromBlobStorage(blob)
+//     .then(res => console.log(`Blob Content :- ${res}`))
+//     .catch(err => console.log(`Error :- ${err}`));
 

@@ -14,7 +14,8 @@
     "azurite": "^3.31.0",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.4.5",
-    "pg": "^8.12.0"
+    "pg": "^8.12.0",
+    "pg-format": "^1.0.4"
   },
   "devDependencies": {
     "jest": "^29.7.0"

@@ -1,5 +1,6 @@
 const pg = require('pg');
 const { Pool } = pg;
+var format = require('pg-format');
 require('dotenv').config();
 
 const pool = new Pool();
@@ -24,4 +25,10 @@ const createQueryConfig = (text, values) => {
     };
 }
 
-module.exports = { queryDb };
+const insert = async(text, values) => {
+    var sql = format(text, values);
+    const client = await pool.connect();
+    return await client.query(sql);
+}
+
+module.exports = { queryDb, insert };
