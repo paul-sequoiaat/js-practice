@@ -3,7 +3,7 @@ const { BlobServiceClient } = require('@azure/storage-blob');
 const { getReadStreamForFile } = require('../file-service/file-reader');
 const path = require('path');
 
-const connectionString = process.env.BLOB_STORAGE_CONNECTION_STRING;
+const connectionString = process.env.CONNECTION_STRING;
 const blobContainerName = process.env.BLOB_CONTAINER;
 const blob = process.env.BLOB;
 const filePath = path.join('resources', 'MOCK_DATA_WITH_NAME_AND_DATETIME.csv');
