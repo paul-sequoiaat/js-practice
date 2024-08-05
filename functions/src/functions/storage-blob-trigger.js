@@ -11,7 +11,7 @@ app.storageBlob('storage-blob-trigger', {
         context.log(`Storage blob function processed blob "${context.triggerMetadata.name}" with size ${blob.length} bytes`);
         const blockBlobClient = await fetchBlockBlobClient(context.triggerMetadata.name);
         const blobContentBuffer = await blockBlobClient.downloadToBuffer(0);
-        processBLOBAndPushToQueue(blobContentBuffer.toString())
+        processBLOBAndPushToQueue(blobContentBuffer.toString().trim())
             .then(() => console.log("BLOB processed successfully"))
             .catch((err) => console.log(`ERROR => ${err}`));
     }
