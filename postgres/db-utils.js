@@ -26,9 +26,15 @@ const createQueryConfig = (text, values) => {
 }
 
 const insert = async(text, values) => {
-    var sql = format(text, values);
-    const client = await pool.connect();
-    return await client.query(sql);
+
+    try {
+        var sql = format(text, values);
+        const client = await pool.connect();
+        await client.query(sql);
+        console.log(`Successfully inserted ${values.length} entries into database`);
+    } catch (err) {
+        console.log(`SQL ERROR => ${err}`);
+    }
 }
 
 module.exports = { queryDb, insert };
