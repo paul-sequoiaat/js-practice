@@ -1,5 +1,5 @@
 const { app } = require('@azure/functions');
-const { fetchBlockBlobClient, processBLOBAndPushToQueue } = require('../../utils/azurite-utils');
+const { fetchBlockBlobClient, processBLOBAndPushToQueue } = require('../../utils/blob-storage-util');
 require('dotenv').config();
 
 const blobContainer = process.env.BLOB_CONTAINER;

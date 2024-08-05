@@ -1,6 +1,6 @@
 const { app } = require('@azure/functions');
 require('dotenv').config();
-const { processMessageAndSaveToDB } = require('../../utils/azurite-utils');
+const { processMessageAndSaveToDB } = require('../../utils/queue-storage-util');
 
 const queue = process.env.queue;
 

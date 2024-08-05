@@ -1,12 +1,10 @@
 require('dotenv').config();
 const { BlobServiceClient } = require('@azure/storage-blob');
 const { QueueServiceClient } = require('@azure/storage-queue');
-const { insert } = require('../../postgres/db-utils');
 
 const connectionString = process.env.CONNECTION_STRING;
 const blobContainer = process.env.BLOB_CONTAINER;
 const queue = process.env.QUEUE;
-const query = "INSERT INTO user_data (name, last_update) VALUES %L";
 
 const fetchBlockBlobClient = async(blob) => {
     const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
@@ -61,9 +59,4 @@ const getQueueClient = async() => {
     return queueClient;
 }
 
-const processMessageAndSaveToDB = async(message) => {
-    const values = message.map(m => [m.name, m.last_update]);
-    insert(query, values);
-}
-
-module.exports = { fetchBlockBlobClient, processBLOBAndPushToQueue, processMessageAndSaveToDB };
+module.exports = { fetchBlockBlobClient, processBLOBAndPushToQueue };
