@@ -16,14 +16,13 @@ const getBlockBlobClient = async(blob) => {
 
 const getContainerClient = async() => {
     const blobServiceClient = BlobServiceClient.fromConnectionString(connectionString);
-    console.log('fetching container client for container', blobContainerName);
     const containerClient = blobServiceClient.getContainerClient(blobContainerName);
     var containerExists = await containerClient.exists();
     if (!containerExists) {
         console.log('creating new container', blobContainerName);
         await containerClient.create();
     }
-    console.log('fetched/created container', containerClient.containerName);
+    console.log('fetched container', containerClient.containerName);
 
     return containerClient;
 }
@@ -47,21 +46,25 @@ const downloadFromBlobStorage = async(blob) => {
 }
 
 const deleteAllBlobsInContainer = async() => {
-    const containerClient = getContainerClient();
-    for await (const blob of (await containerClient).listBlobsFlat()) {
+    const containerClient = await getContainerClient();
+    const blobItems = containerClient.listBlobsFlat();
+    for await (const blob of blobItems) {
         console.log('deleting blob', blob.name);
-        const blobClient = (await containerClient).getBlobClient(blob.name);
+        const blobClient = containerClient.getBlobClient(blob.name);
         blobClient.delete();
     }
 }
 
-uploadToBlobStorage(blob, filePath)
-    .then(res => {
-        if (res) console.log(`Blob upload success`, new Date())
-    })
-    .catch(err => console.log(`ERROR ${err}`));
+// uploadToBlobStorage(blob, filePath)
+//     .then(res => {
+//         if (res) console.log(`Blob upload success`, new Date())
+//     })
+//     .catch(err => console.log(`ERROR ${err}`));
 
 // downloadFromBlobStorage(blob)
 //     .then(res => console.log(`Blob Content :- ${res}`))
 //     .catch(err => console.log(`Error :- ${err}`));
 
+// deleteAllBlobsInContainer(blob);
+
+module.exports = { uploadToBlobStorage, downloadFromBlobStorage, deleteAllBlobsInContainer };
